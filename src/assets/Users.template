@@ -1,0 +1,13 @@
+<?php
+declare (strict_types = 1);
+
+namespace app\model;
+use SaTan\Think\Auth\Contracts\Authenticate;
+use SaTan\Think\Auth\Traits\Authenticatable;
+use think\Model;
+
+class Users extends Model implements Authenticate
+{
+    use Authenticatable;
+
+}
