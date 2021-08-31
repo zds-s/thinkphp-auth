@@ -185,7 +185,7 @@ class AuthManage implements AuthFactory
      */
     protected function getConfig(string $name): array
     {
-        return $this->app->config->get("auth.guards.{$name}");
+        return $this->app->config->get("auth.guards.{$name}")?:[];
     }
 
     /**
@@ -223,7 +223,14 @@ class AuthManage implements AuthFactory
      */
     public function setDefaultDriver(string $name)
     {
-        $this->app->config['auth.defaults.guard'] = $name;
+        $this->app->config->set(
+            array_merge(
+                $this->app->config->get('auth.defaults'),
+                [
+                    'guard'=>$name,
+                ]
+            )
+        );
     }
 
     /**
