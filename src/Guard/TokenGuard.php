@@ -47,7 +47,7 @@ class TokenGuard implements Guard
      */
     protected $hash = false;
 
-    protected UserProvider $provider;
+    protected ?UserProvider $provider=null;
 
     public function __construct(
         UserProvider $provider,
@@ -111,7 +111,7 @@ class TokenGuard implements Guard
         $token = $this->request->get($this->inputKey);
 
         if (empty($token)) {
-            $token = $this->request->input($this->inputKey);
+            $token = $this->request->param((array)$this->inputKey);
         }
 
         if (empty($token)) {
@@ -145,6 +145,7 @@ class TokenGuard implements Guard
         if (Str::startsWith($header, 'Bearer ')) {
             return Str::substr($header, 7);
         }
+        return null;
     }
 
     /**
